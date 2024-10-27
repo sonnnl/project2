@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,8 +30,11 @@ public class BuildingAPI {
 	@Autowired
 	private BuildingService buildingService;
 	@GetMapping("/buildings")
-	public List<BuildingDTO> getBuilding(@RequestParam(value ="name",required = false) String name, @RequestParam(value="districtid",required = false) Long district){
-		return buildingService.findAll(name,district);
+	public List<BuildingDTO> getBuilding(@RequestParam Map<String,String> params,
+			@RequestParam(name="typeCode",required = false) List<String> typeCode
+			){
+			List<BuildingDTO> result = buildingService.findAll(params,typeCode);
+		return result;
 	}
    @DeleteMapping("/users/{id}")
    public void deleteUser(@PathVariable Integer id) {
