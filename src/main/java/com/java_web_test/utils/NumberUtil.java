@@ -1,12 +1,15 @@
 package com.java_web_test.utils;
 
 public class NumberUtil {
-	public static boolean isNumber(String s) {
-		try {
-			Long l = Long.parseLong(s);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
+	 public static boolean isNumber(String s) {
+	        if (s == null || s.isEmpty()) {
+	            return false;
+	        }
+	        try {
+	            Double.parseDouble(s);  // Use Double to handle decimal numbers as well
+	            return true;
+	        } catch (NumberFormatException e) {
+	            return false;
+	        }
+	    }
 }
