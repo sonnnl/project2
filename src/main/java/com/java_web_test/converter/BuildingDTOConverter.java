@@ -17,13 +17,8 @@ import com.java_web_test.reponsitory.entity.RentAreaEntity;
 @Component
 public class BuildingDTOConverter {
 	@Autowired
-	private DistrictReponsitory districtReponsitory;
-	@Autowired
-	private RentAreaReponsitory rentAreaReponsitory;
-	@Autowired
 	private ModelMapper modelMapper;
 	public BuildingDTO toBuildingDTO(BuildingEntity item) {
-		DistrictEntity de = districtReponsitory.findNameById(item.getDistrictId());
 		BuildingDTO building = modelMapper.map(item, BuildingDTO.class);
 //		building.setName(item.getName());
 //		building.setBrokerageFee(item.getBrokerageFee());
@@ -33,8 +28,8 @@ public class BuildingDTOConverter {
 //		building.setRentPrice(item.getRentPrice());
 //		building.setFloorArea(item.getFloorArea());
 //		building.setServiceFee(item.getServiceFee());
-		building.setAddress(item.getStreet() + ", " + item.getWard() + ", " + de.getName());
-		List<RentAreaEntity> lRAE = rentAreaReponsitory.getRentAreaByBuildingId(item.getId());
+		building.setAddress(item.getStreet() + ", " + item.getWard() + ", " + item.getDistrict().getName());
+		List<RentAreaEntity> lRAE = item.getListRentArea();
 		building.setRentArea(lRAE.stream()
                 .map(RentAreaEntity::getValue) // Lấy giá trị từ RentAreaEntity
                 .collect(Collectors.joining(","))); // Nối bằng dấu phẩy
